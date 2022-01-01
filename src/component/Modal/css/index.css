@@ -1,0 +1,15 @@
+.MuiModal-root .MuiButton-root {
+  background: rgb(7, 117, 106);
+  color: #fafafa;
+  padding: 3px 6px;
+  margin: 14px 8px 0px;
+  font-weight: 600;
+}
+
+.MuiModal-root .MuiButton-root:hover {
+  background: #98e6de;
+  color: #0b534c;
+  padding: 3px 6px;
+  margin: 14px 8px 0px;
+  font-weight: 600;
+}

@@ -1,0 +1,35 @@
+.main__room {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  cursor: pointer;
+  margin: 10px 0px;
+  border: 1px solid transparent;
+}
+
+.main__room:hover {
+  border: 1px solid #adf0e9;
+  border-radius: 5px;
+  background: turquoise;
+}
+
+.room__photo > img {
+  object-fit: contain;
+  width: 33px;
+  border-radius: 50%;
+  border: 1px solid lightgray;
+}
+
+.room__desc {
+  margin-left: 8px;
+}
+
+.room__name {
+  font-size: 0.975em;
+  font-weight: 600;
+}
+
+.room__owner {
+  font-size: 0.885em;
+  letter-spacing: 0.255px;
+}

@@ -1,0 +1,15 @@
+.feild {
+  position: relative;
+  margin: 5px 5px 10px 5px;
+  width: 100%;
+}
+
+.feild > input {
+  width: 90%;
+  padding: 10px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid gray;
+  font-size: 1.175em;
+  font-weight: 500;
+}
