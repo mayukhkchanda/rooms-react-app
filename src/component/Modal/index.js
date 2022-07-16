@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Field from "../Feild";
-import "./css/index.css";
+import "./css/index.scss";
 
 const style = {
   position: "absolute",
@@ -35,6 +35,9 @@ export default function BasicModal({ open, handleClose, handleConfirm }) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        classes={{
+          root: "modal-root",
+        }}
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">

@@ -114,7 +114,7 @@ const Home = ({ rooms = [], addRoom, addUserToRoom, user }) => {
           handleOpen={handleOpen}
           handleClose={handleClose}
           handleConfirm={handleConfirm}
-        ></Modal>
+        />
       </div>
     </div>
   );

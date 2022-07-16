@@ -13,3 +13,12 @@
   margin: 14px 8px 0px;
   font-weight: 600;
 }
+
+.modal-root {
+  @media screen and (max-width: 600px) {
+    .MuiBox-root {
+      max-width: 330px;
+      width: 400px;
+    }
+  }
+}
