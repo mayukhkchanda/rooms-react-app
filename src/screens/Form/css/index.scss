@@ -1,6 +1,19 @@
 .form {
   display: grid;
   place-items: center;
+  margin-top: 12px;
+  .submit-btn {
+    margin: 24px 0px;
+    text-transform: none;
+  }
+  .header {
+    text-align: left;
+    width: 100%;
+    margin-top: 12px;
+    font-size: 16;
+    font-weight: 600;
+    padding: 0px 24px;
+  }
 }
 
 .oauth--error {

@@ -1,0 +1,61 @@
+.signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .text-transform-none {
+    text-transform: none;
+  }
+
+  .ml-8 {
+    margin-left: 8px;
+  }
+
+  .signin__main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 300px;
+    border-radius: 5px;
+    background: #f8f8f8;
+    padding: 20px;
+  }
+
+  .main__logo {
+    width: 50px;
+    object-fit: contain;
+  }
+
+  .main__text {
+    margin-top: 14px;
+  }
+
+  .main__btn {
+    margin-top: 20px;
+    justify-self: flex-end;
+    background-color: #22c903e0;
+    border: none;
+    outline: none;
+    padding: 8px;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 350ms ease;
+  }
+
+  .main__btn:hover {
+    background-color: #0a8d48;
+    transition: background-color 350ms ease;
+  }
+
+  .secondary__text {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+}

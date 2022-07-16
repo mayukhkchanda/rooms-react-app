@@ -170,3 +170,18 @@ export const postMessage = (roomId, message) => async (dispatch, getState) => {
       messages: firebase.firestore.FieldValue.arrayUnion(message),
     });
 };
+
+//----------- FETCH USER'S DATA FROM IDs ------------//
+// export const fetchUsersDataFromIds =
+//   (userIds) => async (dispatch, getState) => {
+//     const data = await db
+//       .collection("users")
+//       .doc(roomId)
+//       .where("country", "in", ["USA", "Japan"]);
+//     console.log(data);
+//   };
+
+//----------- ADD USER DATA AFTER SIGN UP ------------//
+export const addUserData = (user) => {
+  db.collection("users").add(user);
+};

@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { Router, Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Home from "./screens/Home";
 import Signin from "./screens/Signin";
 import Signup from "./screens/Signup";
-import { Link } from "react-router-dom";
 import history from "./history";
 import Rooms from "./screens/Rooms";
 

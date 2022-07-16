@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import Room from "../Room";
 import "./css/index.scss";
@@ -10,6 +10,7 @@ import { getRooms, addRoom, addUserToRoom } from "../../actions";
 
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { Grid } from "@mui/material";
 import Button from "../Button";
 import { authenticator } from "../../firebase";
@@ -32,27 +33,38 @@ const Home = ({ rooms = [], addRoom, addUserToRoom, user }) => {
   };
 
   const renderRooms = () => {
-    let renderedRoomsList = null;
+    const roomsToRender = rooms.filter(
+      (room) => !room.users.find((userId) => userId === user.id)
+    );
 
-    if (rooms.length) {
-      renderedRoomsList = rooms
-        .filter((room) => !room.users.find((userId) => userId === user.id))
-        .map(({ id, createdBy, roomName }) => {
-          return (
-            <Link
-              key={id}
-              to={`/rooms/${id}`}
-              onClick={() => {
-                addUserToRoom(id);
-              }}
-            >
-              <Room roomName={roomName} createdBy={createdBy} />
-            </Link>
-          );
-        });
+    if (roomsToRender.length) {
+      return (
+        <>
+          <h2 className="main__header">Join a Room</h2>
+          <div className="main__rooms">
+            {roomsToRender.map(({ id, createdBy, roomName }) => {
+              return (
+                <Link
+                  key={id}
+                  to={`/rooms/${id}`}
+                  onClick={() => {
+                    addUserToRoom(id);
+                  }}
+                >
+                  <Room roomName={roomName} createdBy={createdBy} />
+                </Link>
+              );
+            })}
+          </div>
+        </>
+      );
     }
 
-    return renderedRoomsList;
+    return (
+      <>
+        <h2 className="main__header">All caught up! Start Chatting.</h2>
+      </>
+    );
   };
 
   if (!user?.id) {
@@ -76,8 +88,7 @@ const Home = ({ rooms = [], addRoom, addUserToRoom, user }) => {
         </Grid>
       </Grid>
       <div className="home__main">
-        <h2 className="main__header">Join a Room</h2>
-        <div className="main__rooms">{renderRooms()}</div>
+        {renderRooms()}
         {/**main room end */}
       </div>
       {/**main content end */}

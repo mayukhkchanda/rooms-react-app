@@ -31,7 +31,7 @@ const Rooms = ({ room }) => {
     setChatOpen(false);
   };
 
-  const renderChats = () => {
+  const renderChat = () => {
     let renderedChat = null;
 
     if (roomId === "0" || !room?.id) {
@@ -50,13 +50,11 @@ const Rooms = ({ room }) => {
     return renderedChat;
   };
 
-  const showSidebar = !isMobileView || (isMobileView && !isChatOpen);
-  const showChat = !isMobileView || (isMobileView && isChatOpen);
   if (isMobileView) {
     return (
       <div className="rooms">
         {!isChatOpen && <Sidebar selectedRoomId={roomId} />}
-        {isChatOpen && renderChats()}
+        {isChatOpen && renderChat()}
         {isChatOpen && <Button onClick={() => closeChat()}>Close Chat</Button>}
       </div>
     );
@@ -64,7 +62,7 @@ const Rooms = ({ room }) => {
   return (
     <div className="rooms">
       <Sidebar selectedRoomId={roomId} />
-      {renderChats()}
+      {renderChat()}
     </div>
   );
 };

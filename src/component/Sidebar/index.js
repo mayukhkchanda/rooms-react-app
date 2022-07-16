@@ -11,16 +11,15 @@ import { Link } from "react-router-dom";
 import Dropdown from "../Dropdown";
 
 import { authenticator } from "../../firebase";
+import { getLastMsg } from "../../utils/sidebarUtils";
 import history from "../../history";
 import "./css/index.scss";
 
 const Sidebar = ({ rooms, user, selectedRoomId }) => {
   const handleSignout = () => {
-    console.log("Sign-out");
     authenticator.signOut();
     history.push("/signin");
   };
-
   return (
     <div className="sidebar">
       <div className="section section-1">
@@ -77,16 +76,25 @@ const Sidebar = ({ rooms, user, selectedRoomId }) => {
         {rooms &&
           rooms
             .filter((room) => room.users.find((userId) => userId === user.id))
-            .map((room) => (
-              <Link key={room.id} to={`${room.id}`}>
-                <ChatSelection
-                  roomName={room.roomName}
-                  lastMsg="Just DO IT!"
-                  avatarUrl={`https://avatars.dicebear.com/api/human/${room.roomName}.svg`}
-                  isSelected={room?.id === selectedRoomId}
-                />
-              </Link>
-            ))}
+            .map((room) => {
+              const { id, roomName, messages } = room || {};
+              const lastMsg =
+                messages?.length > 0
+                  ? getLastMsg(messages?.[messages?.length - 1], user)
+                  : "";
+              return (
+                <Link key={id} to={`${id}`}>
+                  <ChatSelection
+                    roomName={roomName}
+                    roomId={id}
+                    lastMsg={lastMsg}
+                    userId={user.id}
+                    avatarUrl={`https://avatars.dicebear.com/api/human/${roomName}.svg`}
+                    isSelected={id === selectedRoomId}
+                  />
+                </Link>
+              );
+            })}
       </div>
       {/**Chats Section end  */}
     </div>

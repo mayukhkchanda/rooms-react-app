@@ -1,9 +1,10 @@
 import React from "react";
 import { Formik } from "formik";
-import "./css/index.css";
 import Field from "../Field";
-import Button from "../Button";
 import LoadingButton from "@mui/lab/LoadingButton";
+import LoginIcon from "@mui/icons-material/Login";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import "./css/index.scss";
 
 const Form = ({ handleFormSubmit, formType, oAuthErr }) => {
   return (
@@ -44,7 +45,6 @@ const Form = ({ handleFormSubmit, formType, oAuthErr }) => {
         values.email = "";
         values.password = "";
         values.username = "";
-
         handleFormSubmit(setSubmitting, email, pwd, username);
       }}
     >
@@ -58,6 +58,11 @@ const Form = ({ handleFormSubmit, formType, oAuthErr }) => {
         isSubmitting,
       }) => (
         <form onSubmit={handleSubmit} className="form">
+          <p className="header">
+            {formType === "signin"
+              ? "Good to have you back!"
+              : "Tell us about yourself!"}
+          </p>
           {formType === "signup" && (
             <Field
               type="text"
@@ -100,8 +105,12 @@ const Form = ({ handleFormSubmit, formType, oAuthErr }) => {
           <LoadingButton
             type="submit"
             loading={isSubmitting}
-            loadingIndicator="Loading..."
-            variant="outlined"
+            disabled={isSubmitting}
+            variant="contained"
+            endIcon={
+              formType === "signin" ? <LoginIcon /> : <AccountCircleIcon />
+            }
+            className="submit-btn"
           >
             {formType === "signin" ? "Sign In" : "Sign Up"}
           </LoadingButton>
