@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 
 import { db } from "../../firebase";
 
-const Chats = ({ data: { id, roomName }, user, postMessage }) => {
+const Chats = ({ data: { id, roomName, createdBy }, user, postMessage }) => {
   const [message, setMessage] = useState("");
 
   const [chats, setChats] = useState(null);
@@ -36,9 +36,6 @@ const Chats = ({ data: { id, roomName }, user, postMessage }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    // console.log(message);
-    // TODO: Call action creator to append messages
 
     const msg = {
       uid: user.id,
@@ -77,7 +74,9 @@ const Chats = ({ data: { id, roomName }, user, postMessage }) => {
         </div>
         <div className="chats__header--middle">
           <h3 className="chats__room__name">{roomName}</h3>
-          <p className="chats__last_seen">Last seen at ...</p>
+          <p className="chats__last_seen">
+            Created by {createdBy || "anonymous"}
+          </p>
         </div>
         <div className="chats__header--right">
           <IconButton>

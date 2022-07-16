@@ -10,7 +10,6 @@ import { getRooms, addRoom, addUserToRoom } from "../../actions";
 
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { Grid } from "@mui/material";
 import Button from "../Button";
 import { authenticator } from "../../firebase";
@@ -72,7 +71,6 @@ const Home = ({ rooms = [], addRoom, addUserToRoom, user }) => {
   }
 
   const handleSignout = () => {
-    console.log("Sign-out");
     authenticator.signOut();
     history.push("/signin");
   };

@@ -19,7 +19,6 @@ export const getRooms = () => async (dispatch, getState) => {
       const list = {};
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
-          //   console.log(doc.data());
           list[doc.id] = {
             id: doc.id,
             ...doc.data(),
@@ -30,8 +29,6 @@ export const getRooms = () => async (dispatch, getState) => {
       return list;
     })
     .catch((err) => console.log(err));
-
-  //   console.log(roomsList);
 
   dispatch({
     type: GET_ROOMS,

@@ -18,21 +18,15 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({
-  open,
-  handleOpen,
-  handleClose,
-  handleConfirm,
-}) {
+export default function BasicModal({ open, handleClose, handleConfirm }) {
   const [Value, setValue] = useState("");
 
   const handleConfirmClick = () => {
-    // TODO: handle blank values and white spaces
-    handleConfirm(Value);
+    if (Value && Value?.trim()) {
+      handleConfirm(Value);
+    }
     setValue("");
   };
-
-  //   console.log(Value);
 
   return (
     <div className="Modal">
@@ -47,7 +41,9 @@ export default function BasicModal({
             Enter Room Name
           </Typography>
           <Field Value={Value} setValue={setValue} />
-          <Button onClick={handleConfirmClick}>Create Room</Button>
+          <Button onClick={handleConfirmClick} disabled={Value?.length < 2}>
+            Create Room
+          </Button>
           <Button onClick={handleClose}>Cancel</Button>
         </Box>
       </Modal>
