@@ -1,6 +1,6 @@
 import { Avatar, IconButton } from "@mui/material";
-import React, { useState } from "react";
-import "./css/index.css";
+import React, { useEffect, useState } from "react";
+import "./css/index.scss";
 
 import SearchIcon from "@mui/icons-material/Search";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
@@ -9,15 +9,62 @@ import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import SendIcon from "@mui/icons-material/Send";
 import Message from "../Message";
 
-const Chats = ({ roomId }) => {
+import { postMessage } from "../../actions";
+import { connect } from "react-redux";
+
+import { db } from "../../firebase";
+
+const Chats = ({ data: { id, roomName }, user, postMessage }) => {
   const [message, setMessage] = useState("");
+
+  const [chats, setChats] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("rooms")
+      .doc(id)
+      .onSnapshot((doc) => {
+        if (doc) {
+          setChats(doc.data().messages);
+        }
+      });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [id]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    console.log(message);
+    // console.log(message);
+    // TODO: Call action creator to append messages
+
+    const msg = {
+      uid: user.id,
+      uname: user.name,
+      body: message,
+      timestamp: Date(),
+    };
+
+    postMessage(id, msg);
 
     setMessage("");
+  };
+
+  const renderChats = () => {
+    if (!chats || chats === []) return false;
+
+    return chats.map(({ body, timestamp, uid, uname }) => (
+      <Message
+        key={timestamp}
+        body={body}
+        timestamp={timestamp}
+        uid={uid}
+        from={uname}
+        isSender={uid === user.id}
+      />
+    ));
   };
 
   return (
@@ -29,7 +76,7 @@ const Chats = ({ roomId }) => {
           />
         </div>
         <div className="chats__header--middle">
-          <h3 className="chats__room__name">Room Name</h3>
+          <h3 className="chats__room__name">{roomName}</h3>
           <p className="chats__last_seen">Last seen at ...</p>
         </div>
         <div className="chats__header--right">
@@ -44,11 +91,7 @@ const Chats = ({ roomId }) => {
           </IconButton>
         </div>
       </div>
-      <div className="chats__body">
-        {/* TODO:: Render Rooms messages here */}
-        <Message />
-        <Message isSender />
-      </div>
+      <div className="chats__body">{renderChats()}</div>
       <div className="chats__footer">
         <IconButton>
           <InsertEmoticonIcon />
@@ -70,4 +113,10 @@ const Chats = ({ roomId }) => {
   );
 };
 
-export default Chats;
+const mapStateToProps = (state) => {
+  return { user: state.user };
+};
+
+const mapDispatchToProps = { postMessage };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chats);

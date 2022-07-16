@@ -1,0 +1,22 @@
+.Feild__button {
+  padding: 5px 10px;
+  background-color: #fff;
+  border: 1px solid lightgrey;
+  color: #333;
+  border-radius: 6px;
+  // width: 80%;
+  font-size: 0.975em;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: background-color 350ms ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: turquoise;
+    transition: background-color 350ms ease-in-out;
+  }
+
+  &:disabled {
+    background-color: #b3b3b3;
+    cursor: not-allowed;
+  }
+}

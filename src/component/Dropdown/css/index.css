@@ -1,0 +1,19 @@
+.icon__menu {
+  display: initial;
+  position: absolute;
+  top: 36px;
+  left: -30px;
+  background-color: #fafafa;
+  padding: 10px;
+  box-shadow: 2px 4px 4px 0px #ccc;
+  cursor: pointer;
+  color: #333;
+}
+
+.icon__menu.hidden {
+  display: none;
+}
+
+.icon__menu.visible {
+  display: initial;
+}

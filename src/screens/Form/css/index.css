@@ -1,0 +1,18 @@
+.form {
+  display: grid;
+  place-items: center;
+}
+
+.oauth--error {
+  width: 80%;
+  color: #fff;
+  background-color: #f16351;
+  word-wrap: break-word;
+  margin: 10px 0px 0px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.form .Feild__button {
+  margin-bottom: 10px;
+}

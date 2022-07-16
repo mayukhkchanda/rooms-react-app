@@ -1,0 +1,30 @@
+.Feild {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.Feild__input {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 1em;
+  outline: none;
+}
+
+.Feild__input:focus {
+  border: 1px solid turquoise;
+}
+
+.Feild__input.error {
+  border: 1px solid #e74e4e;
+  background-color: #f5b2b2;
+}
+
+.Feild__error {
+  color: #e74e4e;
+  padding: 8px 6px 0px;
+  width: 70%;
+}

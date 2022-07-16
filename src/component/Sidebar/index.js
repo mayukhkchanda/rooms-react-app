@@ -1,17 +1,26 @@
 import React from "react";
-import "./css/index.css";
 import DonutLargeSharpIcon from "@mui/icons-material/DonutLargeSharp";
 import Avatar from "@mui/material/Avatar";
 import ChatIcon from "@mui/icons-material/Chat";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import IconButton from "@mui/material/IconButton";
 
 import ChatSelection from "../ChatSelection";
 
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Dropdown from "../Dropdown";
 
-const Sidebar = ({ rooms, user }) => {
+import { authenticator } from "../../firebase";
+import history from "../../history";
+import "./css/index.scss";
+
+const Sidebar = ({ rooms, user, selectedRoomId }) => {
+  const handleSignout = () => {
+    console.log("Sign-out");
+    authenticator.signOut();
+    history.push("/signin");
+  };
+
   return (
     <div className="sidebar">
       <div className="section section-1">
@@ -23,6 +32,7 @@ const Sidebar = ({ rooms, user }) => {
               />
             </IconButton>
           </div>
+          <div className="avatar--name">{user?.name}</div>
         </div>
 
         <div className="section-1__right">
@@ -38,11 +48,7 @@ const Sidebar = ({ rooms, user }) => {
             </IconButton>
           </div>
 
-          <div className="moreVerticon icon">
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          </div>
+          <Dropdown handleSignout={handleSignout} />
         </div>
       </div>{" "}
       {/**Avatar Section end */}
@@ -61,9 +67,11 @@ const Sidebar = ({ rooms, user }) => {
         </div>
       </div>{" "}
       {/**Search Chat Section end */}
-      <div className="section section-3">
-        <p className="addChat__title">Add or Join a Room</p>
-      </div>
+      <Link to="/">
+        <div className="section section-3">
+          <p className="addChat__title">Add or Join a Room</p>
+        </div>
+      </Link>
       {/**Add/Join chat Section end  */}
       <div className="section section-4">
         {rooms &&
@@ -75,6 +83,7 @@ const Sidebar = ({ rooms, user }) => {
                   roomName={room.roomName}
                   lastMsg="Just DO IT!"
                   avatarUrl={`https://avatars.dicebear.com/api/human/${room.roomName}.svg`}
+                  isSelected={room?.id === selectedRoomId}
                 />
               </Link>
             ))}

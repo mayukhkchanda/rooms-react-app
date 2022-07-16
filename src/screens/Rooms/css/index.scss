@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: helvetica;
+}
+
+.rooms {
+  display: flex;
+  flex-direction: row;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    .Feild__button {
+      margin: 12px 16px 0px;
+    }
+  }
+}

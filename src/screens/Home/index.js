@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Room from "../Room";
-import "./css/index.css";
+import "./css/index.scss";
 
 import Modal from "../../component/Modal";
 
 import { connect } from "react-redux";
-import { getRooms, addRoom } from "../../actions";
+import { getRooms, addRoom, addUserToRoom } from "../../actions";
 
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Grid } from "@mui/material";
+import Button from "../Button";
+import { authenticator } from "../../firebase";
+import history from "../../history";
 
-const Home = ({ rooms = [], getRooms, addRoom, user }) => {
-  useEffect(() => {
-    // getRooms();
-  }, []);
-
+const Home = ({ rooms = [], addRoom, addUserToRoom, user }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -27,7 +27,6 @@ const Home = ({ rooms = [], getRooms, addRoom, user }) => {
   };
 
   const handleConfirm = (roomName) => {
-    // console.log(roomName);
     addRoom(roomName);
     handleClose();
   };
@@ -40,7 +39,13 @@ const Home = ({ rooms = [], getRooms, addRoom, user }) => {
         .filter((room) => !room.users.find((userId) => userId === user.id))
         .map(({ id, createdBy, roomName }) => {
           return (
-            <Link key={id} to={`/rooms/${id}`}>
+            <Link
+              key={id}
+              to={`/rooms/${id}`}
+              onClick={() => {
+                addUserToRoom(id);
+              }}
+            >
               <Room roomName={roomName} createdBy={createdBy} />
             </Link>
           );
@@ -50,9 +55,26 @@ const Home = ({ rooms = [], getRooms, addRoom, user }) => {
     return renderedRoomsList;
   };
 
+  if (!user?.id) {
+    return <Redirect to="signin" />;
+  }
+
+  const handleSignout = () => {
+    console.log("Sign-out");
+    authenticator.signOut();
+    history.push("/signin");
+  };
+
   return (
     <div className="home">
-      <h1 className="home__header">Welcome to Rooms App</h1>
+      <Grid container className="header-container" alignItems="center">
+        <Grid item xs={11}>
+          <h2 className="home__header">{`Hi ${user?.name}! Welcome back.`}</h2>
+        </Grid>
+        <Grid item xs={1} onClick={() => handleSignout()}>
+          <Button innerText="Logout" type="button" />
+        </Grid>
+      </Grid>
       <div className="home__main">
         <h2 className="main__header">Join a Room</h2>
         <div className="main__rooms">{renderRooms()}</div>
@@ -96,4 +118,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   getRooms,
   addRoom,
+  addUserToRoom,
 })(Home);

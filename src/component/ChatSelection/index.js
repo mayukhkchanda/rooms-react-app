@@ -1,11 +1,11 @@
 import React from "react";
-import "./css/index.css";
+import "./css/index.scss";
 import Avatar from "@mui/material/Avatar";
 import { IconButton } from "@mui/material";
 
-const ChatSelection = ({ roomName, lastMsg, avatarUrl }) => {
+const ChatSelection = ({ roomName, lastMsg, avatarUrl, isSelected }) => {
   return (
-    <div className="chat__selection">
+    <div className={`chat__selection ${isSelected ? "selected" : ""}`}>
       <div className="chat__selection--left">
         <div className="avatar-icon icon">
           <IconButton>

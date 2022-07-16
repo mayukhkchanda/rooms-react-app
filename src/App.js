@@ -1,62 +1,62 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch, useLocation } from "react-router-dom";
 import Home from "./screens/Home";
-// import Rooms from "./screens/Rooms";
 import Signin from "./screens/Signin";
+import Signup from "./screens/Signup";
 import { Link } from "react-router-dom";
 import history from "./history";
 import Rooms from "./screens/Rooms";
 
 import { connect } from "react-redux";
-import { signIn, signOut, fetchUserRooms, getRooms } from "./actions";
+import { signIn, signOut, getRooms } from "./actions";
 
-// TODO: Update to get the logged in user
-const user = { name: "test_user", id: "UtZq6Hb80DRYEBqZm4HD" };
+import { authenticator } from "./firebase";
 
-const App = ({ signIn, signOut, fetchUserRooms, getRooms }) => {
-  //TODO: Initialise user object here
+const App = ({ signIn, signOut, getRooms, userDetails }) => {
   useEffect(() => {
-    if (user) {
-      signIn(user);
-      // fetchUserRooms(user);
-      getRooms();
+    if (userDetails?.id) {
+      history.push("/");
     } else {
-      signOut();
+      history.push("/signin");
     }
+  }, [userDetails?.id]);
 
-    // return () => { }
+  useEffect(() => {
+    authenticator.onAuthStateChanged((user) => {
+      if (user) {
+        const { uid, displayName, email, photoURL } = user;
+
+        if (!userDetails?.id) {
+          signIn({ id: uid, name: displayName, email, photoURL });
+        }
+        getRooms();
+      } else {
+        signOut();
+      }
+    });
   }, []);
 
   return (
-    <Router history={history}>
-      <div className="app">
-        <div className="app__body">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/signin" component={Signin} />
-            <Route exact path="/rooms/:roomId" component={Rooms} />
-          </Switch>
-        </div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/signin">Signin</Link>
-          </li>
-          <li>
-            <Link to="/rooms/23123">Rooms</Link>
-          </li>
-        </ul>
+    <div className="app">
+      <div className="app__body">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/signin" component={Signin} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/rooms/:roomId" component={Rooms} />
+        </Switch>
       </div>
-    </Router>
+    </div>
   );
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  userDetails: state?.user,
+});
+
+export default connect(mapStateToProps, {
   signIn,
   signOut,
-  fetchUserRooms,
   getRooms,
 })(App);

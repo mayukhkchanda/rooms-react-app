@@ -1,4 +1,11 @@
-import { GET_ROOMS, ADD_ROOM, SIGNIN, SIGNOUT, FETCHUSERROOMS } from "./types";
+import {
+  GET_ROOMS,
+  ADD_ROOM,
+  SIGNIN,
+  SIGNOUT,
+  FETCHUSERROOMS,
+  ADDUSERTOROOM,
+} from "./types";
 import { db } from "../firebase";
 import firebase from "firebase/app";
 import history from "../history";
@@ -119,4 +126,47 @@ export const fetchUserRooms = (user) => async (dispatch, getState) => {
     type: FETCHUSERROOMS,
     payload: userRooms,
   });
+};
+
+//----------- ADD USER TO A ROOM ------------//
+export const addUserToRoom = (roomId) => async (dispatch, getState) => {
+  const uid = getState().user.id;
+
+  const roomData = await db
+    .collection("rooms")
+    .doc(roomId)
+    .update({
+      users: firebase.firestore.FieldValue.arrayUnion(uid),
+    })
+    .then(async () => {
+      const data = await db
+        .collection("rooms")
+        .doc(roomId)
+        .get()
+        .then((doc) => {
+          let data = {};
+
+          if (doc.exists) {
+            data = { id: doc.id, ...doc.data() };
+          }
+          return data;
+        });
+
+      return data;
+    })
+    .catch((err) => console.log(err));
+
+  dispatch({
+    type: ADDUSERTOROOM,
+    payload: roomData,
+  });
+};
+
+//----------- POST MESSAGE ------------//
+export const postMessage = (roomId, message) => async (dispatch, getState) => {
+  db.collection("rooms")
+    .doc(roomId)
+    .update({
+      messages: firebase.firestore.FieldValue.arrayUnion(message),
+    });
 };

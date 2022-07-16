@@ -1,4 +1,4 @@
-import { FETCHUSERROOMS, ADD_ROOM } from "../actions/types";
+import { FETCHUSERROOMS, ADD_ROOM, ADDUSERTOROOM } from "../actions/types";
 
 const INIT_STATE = {};
 
@@ -7,6 +7,7 @@ export const userRoomsReducer = (state = INIT_STATE, action) => {
     case FETCHUSERROOMS:
       return action.payload;
     case ADD_ROOM:
+    case ADDUSERTOROOM:
       return { ...state, [action.payload.id]: action.payload };
 
     default:
