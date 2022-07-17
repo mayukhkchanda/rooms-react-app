@@ -22,3 +22,4 @@ _Built using React JS and Firebase, **Rooms** is a real time text messaging app 
 1. Rendering UI based on different devices from Mobile to Laptops/Desktops
 1. Component design & reusability
 1. Version controls using GIT & GitHub
+1. Using Sass as a for styling inplace of traditional stylesheets 
