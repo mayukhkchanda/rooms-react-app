@@ -1,4 +1,4 @@
-# **Rooms💬** - Real time text messaging app
+# **Rooms 💬** - Real time text messaging app
 
 _Built using React JS and Firebase, **Rooms** is a real time text messaging app create as a passion project._
 
