@@ -24,3 +24,6 @@ yarn-error.log*
 
 todo
 config.*
+.firebaserc
+firebase.json
+/.firebase
